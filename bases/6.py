@@ -67,12 +67,21 @@ class ChargedMover:
             screen,
             (50, 50, 50),
             False,
-            ([0, 0], (Vector.magnitude(self.pos.x), Vector.magnitude(self.pos.y))),
-        )  # PROBLEM: I NEED THE SEPARATE COMPONENTS
+            (
+                (0, 0),
+                (
+                    math.floor(self.pos.to_matrix(A)[0]),
+                    math.floor(self.pos.to_matrix(A)[1]),
+                ),
+            ),
+        )
         pygame.draw.circle(
             screen,
             (100, 100, 100),
-            (Vector.magnitude(self.pos.x), Vector.magnitude(self.pos.y)),
+            (
+                math.floor(self.pos.to_matrix(A)[0]),
+                math.floor(self.pos.to_matrix(A)[1]),
+            ),
             17,
         )
 
