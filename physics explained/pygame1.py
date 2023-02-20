@@ -8,7 +8,7 @@ pygame.init()
 screen = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
 
-Q = 10 ** (3.7)
+Q = 10 ** (3.517)
 k = 9 * 10 ** (-9)
 g = 9.8
 
