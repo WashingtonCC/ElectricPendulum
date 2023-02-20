@@ -13,14 +13,18 @@ clock = pygame.time.Clock()
 #pygameZoom.set_background((255, 255, 255))
 #pygameZoom.set_zoom_strength(10000)
 
-Q = 2 * 10 ** (-1)
+Q = 2 * 10 ** (4.3)
 k = 9 * 10 ** (-9)
 g = 9.8
 
 # 1 METER = 100PX
+scale = 400
 
-l = 2
-l0 = 1
+axis = (width/2, 100)
+radius = 5
+
+l = .4
+l0 = .1
 
 q = Q
 q0 = Q
@@ -28,16 +32,15 @@ q0 = Q
 t = 0
 dt = 0.01
 
-axis = (width/2, 0)
-
+theta0 = math.pi/6
 
 class Bob:
     def __init__(self):
-        self.theta = math.pi / 4
+        self.theta = theta0
         self.thetadt = 0
 
-        self.x = l * math.sin(self.theta)*100 + axis[0]
-        self.y = -l * math.cos(self.theta)*100 + axis[1]
+        self.x = l * math.sin(self.theta)*scale + axis[0]
+        self.y = -l * math.cos(self.theta)*scale + axis[1]
 
         self.m = 0.5
         self.q = Q
@@ -50,15 +53,21 @@ class Bob:
             screen,
             (100, 100, 100),
             (self.x, self.y),
-            10,
+            radius,
         )
-        pygame.draw.circle(screen, (100,100,100), (axis[0], l*100 + l0*100 + axis[1]), 10,)
+        pygame.draw.circle(screen, (100,100,100), (axis[0], l*scale + l0*scale + axis[1]), radius,)
 
 
 def update():
     p.draw()
     # pygameZoom.render(screen, (100, 100))
     pygame.display.update()
+
+
+def render_info(text, position):
+    font = pygame.font.SysFont("Arial", 16, True, False)
+    surface = font.render(text, True, (0,0,0))
+    screen.blit(surface, position)
 
 
 p = Bob()
@@ -76,13 +85,16 @@ while True:
     p.thetadt = p.thetadt + thetaddt * dt
     p.theta = p.theta + p.thetadt * dt
 
-    p.x = l * math.sin(p.theta) * 100 + axis[0]
-    p.y = l * math.cos(p.theta) * 100 + axis[1]
+    p.x = l * math.sin(p.theta) * scale + axis[0]
+    p.y = l * math.cos(p.theta) * scale + axis[1]
     t = t + dt
 
-    #print(p.theta)
-    #print(p.x, p.y)
-    #print()
+    render_info(f"Initial distance between bodies: {l0} m", [10, 10])
+    render_info(f"Pendulum length: {l} m", [10, 30])
+    render_info("Charge of each body: {:e} C".format(Q), [10, 50])
+    render_info(f"theta: {round(p.theta*180/math.pi)} º", [10, 70])
+    render_info(f"Initial theta: {round(theta0*180/math.pi)} º", [10, 90])
+    render_info(f"Scale: 1m = {scale} px", [10, 110])
 
     update()
     screen.fill((255, 255, 255))
