@@ -1,6 +1,5 @@
 import pygame
 import math
-#from pygameZoom import PygameZoom
 
 
 width = 800
@@ -8,10 +7,6 @@ height = 400
 pygame.init()
 screen = pygame.display.set_mode((width, height))
 clock = pygame.time.Clock()
-
-#pygameZoom = PygameZoom(800, 400)
-#pygameZoom.set_background((255, 255, 255))
-#pygameZoom.set_zoom_strength(10000)
 
 Q = 10 ** (3.7)
 k = 9 * 10 ** (-9)
