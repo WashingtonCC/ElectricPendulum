@@ -35,6 +35,7 @@ class ChargedMover:
         self.m = m
         self.q = q
         self.Fg = m * (A.x + 9.8 * A.y)
+        self.theta = pos.angle_between(Axis.pos)
 
     def get_pos(self):
         self.pos += self.v
@@ -49,6 +50,9 @@ class ChargedMover:
         resultant = math.sin(self.pos.angle_between(AXIS.pos)) * self.Fg
         return resultant
 
+    def _get_T(self, Fe):
+        pass
+
     def _get_Fe(self, other):
         distance = Vector.magnitude(self.pos - other.pos)
         angle = self.pos.angle_between(other.pos)
@@ -56,6 +60,10 @@ class ChargedMover:
         Fe_y = magnitude * math.sin(angle)
         Fe_x = magnitude * math.cos(angle)
         return Fe_x * A.x + Fe_y * A.y
+
+    # Tension: it's equal to the forces applied in the direction of the radius and pointing outside
+    # So, it's better to calculate it last
+    # Also, the angle calculated by angle_between is the smallest one; that doesn't work if I want the angle of the pendulum
 
     def get_a(self, other):
         net_force = self._get_Fg_plus_T() + self._get_Fe(other)
