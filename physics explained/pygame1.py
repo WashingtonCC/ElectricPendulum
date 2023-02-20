@@ -13,11 +13,11 @@ clock = pygame.time.Clock()
 #pygameZoom.set_background((255, 255, 255))
 #pygameZoom.set_zoom_strength(10000)
 
-Q = 2 * 10 ** (4.3)
+Q = 10 ** (3.7)
 k = 9 * 10 ** (-9)
 g = 9.8
 
-# 1 METER = 100PX
+# 1 METER = 400PX
 scale = 400
 
 axis = (width/2, 100)
@@ -42,7 +42,7 @@ class Bob:
         self.x = l * math.sin(self.theta)*scale + axis[0]
         self.y = -l * math.cos(self.theta)*scale + axis[1]
 
-        self.m = 0.5
+        self.m = .005
         self.q = Q
 
     def draw(self):
@@ -94,7 +94,8 @@ while True:
     render_info("Charge of each body: {:e} C".format(Q), [10, 50])
     render_info(f"theta: {round(p.theta*180/math.pi)} º", [10, 70])
     render_info(f"Initial theta: {round(theta0*180/math.pi)} º", [10, 90])
-    render_info(f"Scale: 1m = {scale} px", [10, 110])
+    render_info(f"Mass: {p.m} kg", [10, 110])
+    render_info(f"Scale: 1m = {scale} px", [10, 150])
 
     update()
     screen.fill((255, 255, 255))
